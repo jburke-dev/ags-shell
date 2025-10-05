@@ -25,7 +25,7 @@
         }:
         let
           pname = "ags-shell";
-          entry = "app.ts";
+          entry = "app.tsx";
           astalPackages = with inputs'.ags.packages; [
             io
             astal4
