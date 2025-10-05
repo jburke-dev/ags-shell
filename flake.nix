@@ -29,6 +29,7 @@
           astalPackages = with inputs'.ags.packages; [
             io
             astal4
+            hyprland
           ];
           extraPackages =
             astalPackages
