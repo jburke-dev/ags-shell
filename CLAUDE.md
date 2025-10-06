@@ -11,6 +11,7 @@ This is a custom AGS (Aylur's Gtk Shell) shell for Linux built with TypeScript/T
 This project uses Nix flakes for dependency management and development environment setup.
 
 ### Setup
+
 ```bash
 # Enter development shell (if using direnv, this happens automatically)
 nix develop
@@ -20,12 +21,14 @@ direnv allow
 ```
 
 ### TypeScript Configuration
+
 ```bash
 # Generate TypeScript types and tsconfig
 ags types -u -d .
 ```
 
 ### Running the Shell
+
 ```bash
 # Run in development mode
 ags run app.ts
@@ -35,6 +38,7 @@ ags run --watch app.ts
 ```
 
 ### Building
+
 ```bash
 # Build the final package
 nix build
@@ -45,9 +49,11 @@ nix build
 ## Architecture
 
 ### Entry Point
+
 - `app.tsx` - Main application entry point that initializes the app with styles and creates StatusBar instances for each monitor
 
 ### Project Structure
+
 - `windows/` - Top-level window components (e.g., StatusBar)
 - `widgets/` - Reusable widget components (e.g., Clock, Workspaces)
 - `styles.scss` - Global styles
@@ -55,21 +61,25 @@ nix build
 ### Key Framework Concepts
 
 **JSX with AGS GTK4:**
+
 - JSX elements map to GTK4 widgets (e.g., `<box>`, `<button>`, `<label>`)
 - Use lowercase for GTK widgets
 - Import specific GTK widgets from `"ags/gtk4"` when needed (e.g., `Gtk.Calendar`)
 
 **Reactive State:**
+
 - `createBinding()` creates reactive bindings to GObject properties
 - `createPoll()` creates polling-based reactive values
 - Use `.as()` to transform bound values
 
 **Window Setup:**
+
 - Windows need `gdkmonitor` prop to specify which monitor to display on
 - `anchor` prop controls positioning (TOP, LEFT, RIGHT, BOTTOM)
 - `exclusivity` controls whether other windows can overlap (EXCLUSIVE, NORMAL, etc.)
 
 **GObject Introspection:**
+
 - Import GI libraries with `gi://` protocol (e.g., `gi://GLib?version=2.0`)
 - AstalHyprland is used for workspace management
 

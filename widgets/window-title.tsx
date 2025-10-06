@@ -1,10 +1,16 @@
-import { Accessor, createBinding, createComputed, createState, With } from "ags";
-import AstalHyprland from "gi://AstalHyprland";
+import {
+    Accessor,
+    createBinding,
+    createComputed,
+    createState,
+    With,
+} from 'ags';
+import AstalHyprland from 'gi://AstalHyprland';
 
 export default function WindowTitle({ monitorId }: { monitorId: number }) {
     const hypr = AstalHyprland.get_default();
     const [lastTitle, setLastTitle] = createState('');
-    const activeClient = createBinding(hypr, "focusedClient");
+    const activeClient = createBinding(hypr, 'focusedClient');
     /*const title = createComputed([lastTitle, activeClient], (lastTitle, activeClient) => {
         if (!activeClient || activeClient.monitor.id != monitorId) {
             return lastTitle;
@@ -15,14 +21,11 @@ export default function WindowTitle({ monitorId }: { monitorId: number }) {
     */
 
     return (
-        <box class="WindowTitle">
+        <box class='WindowTitle'>
             <With value={activeClient}>
-                {(client) => (
-                    <label label={createBinding(client, "title")} />)}
+                {(client) => <label label={createBinding(client, 'title')} />}
             </With>
-            {
-
-                /*
+            {/*
                 <With value={createBinding(hypr, "focusedClient")}>
                     {(client: AstalHyprland.Client | null) => {
                         if (!client) {
@@ -36,8 +39,7 @@ export default function WindowTitle({ monitorId }: { monitorId: number }) {
                         }
                     }}
                 </With>
-                */
-            }
+                */}
         </box>
     );
 }

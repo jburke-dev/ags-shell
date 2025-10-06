@@ -8,11 +8,16 @@
       url = "github:aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    git-hooks-nix = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.git-hooks-nix.flakeModule ];
       systems = [ "x86_64-linux" ];
       perSystem =
         {
@@ -63,8 +68,18 @@
               runHook postInstall
             '';
           };
+          pre-commit = {
+            settings.hooks = {
+              prettier.enable = true;
+            };
+            check.enable = true;
+          };
           devShells.default = pkgs.mkShell {
+            shellHook = ''
+              ${config.pre-commit.installationScript}
+            '';
             buildInputs = [ (inputs'.ags.packages.default.override { inherit extraPackages; }) ];
+            packages = config.pre-commit.settings.enabledPackages;
           };
         };
     };
