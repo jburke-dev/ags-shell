@@ -4,6 +4,7 @@ import StatusBar from "./windows/StatusBar";
 
 app.start({
     css: styles,
+    instanceName: 'ags-shell',
     main() {
         const monitors = app.get_monitors();
         monitors.map((monitor) => StatusBar({ gdkmonitor: monitor }));

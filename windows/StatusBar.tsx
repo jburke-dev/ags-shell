@@ -5,6 +5,7 @@ import app from "ags/gtk4/app";
 import Workspaces from "../widgets/workspaces";
 import AstalHyprland from "gi://AstalHyprland";
 import WindowTitle from "../widgets/window-title";
+import Media from "../widgets/media";
 
 export default function StatusBar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -22,6 +23,7 @@ export default function StatusBar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
                 <WindowTitle monitorId={monitor.id} />
             </box>
             <box $type="end">
+                <Media />
                 <Clock />
             </box>
         </centerbox>

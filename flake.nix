@@ -30,6 +30,7 @@
             io
             astal4
             hyprland
+            mpris
           ];
           extraPackages =
             astalPackages
