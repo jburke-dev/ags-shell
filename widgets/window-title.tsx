@@ -1,45 +1,19 @@
-import {
-    Accessor,
-    createBinding,
-    createComputed,
-    createState,
-    With,
-} from 'ags';
+import { Accessor, createBinding, With } from 'ags';
 import AstalHyprland from 'gi://AstalHyprland';
 
-export default function WindowTitle({ monitorId }: { monitorId: number }) {
+export default function WindowTitle() {
     const hypr = AstalHyprland.get_default();
-    const [lastTitle, setLastTitle] = createState('');
     const activeClient = createBinding(hypr, 'focusedClient');
-    /*const title = createComputed([lastTitle, activeClient], (lastTitle, activeClient) => {
-        if (!activeClient || activeClient.monitor.id != monitorId) {
-            return lastTitle;
-        }
-        setLastTitle(activeClient.title);
-        return activeClient.title;
-    });
-    */
 
     return (
         <box class='WindowTitle'>
-            <With value={activeClient}>
-                {(client) => <label label={createBinding(client, 'title')} />}
-            </With>
-            {/*
-                <With value={createBinding(hypr, "focusedClient")}>
-                    {(client: AstalHyprland.Client | null) => {
-                        if (!client) {
-                            return (<label label="" />);
-                        } else {
-                            // TODO: nesting fragments aren't yet supported :/
-                             return (<With value={createBinding(client, "title")}>
-                                {(title: string) => (<label label={title} />)}
-                            </With>);
-                            return (<label label={client.title} />);
-                        }
-                    }}
+            {activeClient && (
+                <With value={activeClient}>
+                    {(client) => (
+                        <label label={createBinding(client, 'title')} />
+                    )}
                 </With>
-                */}
+            )}
         </box>
     );
 }
