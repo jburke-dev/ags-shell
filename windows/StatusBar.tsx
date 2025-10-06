@@ -28,7 +28,9 @@ export default function StatusBar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
                 <box $type='start'>
                     <Workspaces monitorId={monitor.id} />
                 </box>
-                <box $type='center'></box>
+                <box $type='center'>
+                    <WindowTitle />
+                </box>
                 <box $type='end'>
                     <Media />
                     <Clock />

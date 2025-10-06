@@ -7,13 +7,15 @@ export default function WindowTitle() {
 
     return (
         <box class='WindowTitle'>
-            {activeClient && (
-                <With value={activeClient}>
-                    {(client) => (
+            <With value={activeClient}>
+                {(client) =>
+                    client ? (
                         <label label={createBinding(client, 'title')} />
-                    )}
-                </With>
-            )}
+                    ) : (
+                        <label label='' />
+                    )
+                }
+            </With>
         </box>
     );
 }
