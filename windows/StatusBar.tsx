@@ -1,6 +1,5 @@
-import { Astal, Gdk, Gtk } from 'ags/gtk4';
+import { Astal, Gdk } from 'ags/gtk4';
 import Clock from '../widgets/clock';
-import { onCleanup } from 'ags';
 import app from 'ags/gtk4/app';
 import Workspaces from '../widgets/workspaces';
 import AstalHyprland from 'gi://AstalHyprland';
@@ -12,8 +11,6 @@ export default function StatusBar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
     const hypr = AstalHyprland.get_default();
     const monitor = hypr.get_monitor_by_name(gdkmonitor.connector)!;
 
-    let win: Astal.Window;
-    onCleanup(() => win!.destroy());
     return (
         <window
             visible

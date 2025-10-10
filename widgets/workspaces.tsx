@@ -1,31 +1,91 @@
-import { createBinding, For } from 'ags';
-import AstalHyprland from 'gi://AstalHyprland';
+import { Accessor, createBinding, createComputed, For } from 'ags';
+import { compositor } from '../utils/hyprland';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
-export default function Workspaces({ monitorId }: { monitorId: number }) {
-    const hypr = AstalHyprland.get_default();
-    const workspaces = createBinding(hypr, 'workspaces').as((workspaces) => {
-        return workspaces
-            .filter(
-                (ws) =>
-                    !(ws.id >= -99 && ws.id <= -2) && ws.monitor.id == monitorId
-            )
-            .sort((a, b) => a.id - b.id);
-    });
+const monitorIndexMap = compositor.monitors.as(
+    (monitors) => new Map(monitors.map((m, index) => [m.name, index]))
+);
+
+interface WorkspaceButtonData {
+    id: number;
+    visible: boolean;
+    monitorIndex?: number;
+    workspace?: AstalHyprland.Workspace;
+}
+
+function WorkspaceButtons({
+    buttons,
+}: {
+    buttons: Accessor<WorkspaceButtonData[]>;
+}) {
     return (
-        <box class='Workspaces opaque'>
-            <For each={workspaces}>
-                {(workspace) => (
+        <box class='Workspaces'>
+            <For each={buttons}>
+                {(buttonData) => (
                     <button
-                        class={createBinding(hypr, 'focusedWorkspace').as(
-                            (focusedWorkspace) =>
-                                workspace == focusedWorkspace ? 'focused' : ''
+                        visible={buttonData.visible}
+                        cssClasses={compositor.focusedWorkspace(
+                            (focusedWorkspace) => {
+                                const classes: string[] = [];
+                                if (
+                                    focusedWorkspace?.id ===
+                                        buttonData.workspace?.id &&
+                                    buttonData.workspace?.monitor.id ===
+                                        focusedWorkspace?.monitor.id
+                                ) {
+                                    classes.push('focused');
+                                }
+                                if (
+                                    buttonData.workspace?.get_clients().length
+                                ) {
+                                    classes.push('occupied');
+                                }
+                                if (buttonData.monitorIndex) {
+                                    classes.push(
+                                        `monitor${buttonData.monitorIndex}`
+                                    );
+                                }
+                                return classes;
+                            }
                         )}
-                        onClicked={() => workspace.focus()}
+                        onClicked={() =>
+                            compositor.focusWorkspace(buttonData.id)
+                        }
                     >
-                        {workspace.id}
+                        {buttonData.id}
                     </button>
                 )}
             </For>
         </box>
     );
+}
+
+export default function Workspaces() {
+    const workspaceButtons = createComputed(
+        [compositor.activeWorkspaces, monitorIndexMap],
+        (activeWorkspaces, monMap) => {
+            const maxId = activeWorkspaces.length
+                ? activeWorkspaces[activeWorkspaces.length - 1].id
+                : 1;
+            const maxWorkspaces = 10;
+
+            const workspaceData: WorkspaceButtonData[] = Array.from(
+                { length: maxWorkspaces },
+                (_, i): WorkspaceButtonData => {
+                    const id = i + 1;
+                    const workspace = activeWorkspaces.find((w) => w.id === id);
+                    return {
+                        id,
+                        visible: maxId >= id,
+                        workspace,
+                        monitorIndex: monMap.get(
+                            workspace?.monitor.get_name() ?? ''
+                        ),
+                    };
+                }
+            );
+            return workspaceData;
+        }
+    );
+    return <WorkspaceButtons buttons={workspaceButtons} />;
 }
