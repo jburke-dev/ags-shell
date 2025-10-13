@@ -1,6 +1,6 @@
 import AstalMpris from 'gi://AstalMpris';
 import { createBinding, For, With } from 'gnim';
-import { firstActivePlayer } from '../utils/mpris';
+import { firstActivePlayer } from '../../utils/mpris';
 
 export default function Media() {
     return (

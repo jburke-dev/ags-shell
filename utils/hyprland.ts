@@ -1,4 +1,5 @@
 import GObject, { register } from 'ags/gobject';
+import app from 'ags/gtk4/app';
 import AstalHyprland from 'gi://AstalHyprland';
 import { Accessor, createBinding } from 'gnim';
 
@@ -8,6 +9,14 @@ export class HyprlandAdapter extends GObject.Object {
     readonly workspaces = createBinding(this.hyprland, 'workspaces');
     readonly monitors = createBinding(this.hyprland, 'monitors');
     readonly focusedMonitor = createBinding(this.hyprland, 'focusedMonitor');
+    readonly focusedGdkMonitor = this.focusedMonitor((hyprMonitor) => {
+        const monitors = app.get_monitors();
+        return (
+            monitors.find(
+                (gdkMon) => gdkMon.get_connector() === hyprMonitor.name
+            ) ?? monitors[0]
+        );
+    });
     readonly focusedWorkspace = createBinding(
         this.hyprland,
         'focusedWorkspace'

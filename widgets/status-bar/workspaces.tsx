@@ -1,5 +1,5 @@
 import { Accessor, createComputed, For } from 'ags';
-import { compositor } from '../utils/hyprland';
+import { compositor } from '../../utils/hyprland';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
 const monitorIndexMap = compositor.monitors.as(

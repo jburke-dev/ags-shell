@@ -3,6 +3,7 @@ import styles from './styles.scss';
 import StatusBar from './windows/StatusBar';
 import { createBinding, For } from 'gnim';
 import { Gtk } from 'ags/gtk4';
+import PickerWindow from './windows/Picker';
 
 app.start({
     css: styles,
@@ -12,7 +13,6 @@ app.start({
         switch (request) {
             case 'picker':
                 app.toggle_window('picker');
-                res('Picker toggled');
                 break;
             default:
                 res('not found');
@@ -20,6 +20,7 @@ app.start({
     },
     main() {
         const monitors = createBinding(app, 'monitors');
+        PickerWindow();
         return (
             <For
                 each={monitors}

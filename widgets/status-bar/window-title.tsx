@@ -1,5 +1,5 @@
 import { Accessor, createBinding, With } from 'ags';
-import { compositor } from '../utils/hyprland';
+import { compositor } from '../../utils/hyprland';
 
 export default function WindowTitle() {
     return (
