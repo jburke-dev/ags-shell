@@ -1,13 +1,10 @@
 import { Accessor, createBinding, With } from 'ags';
-import AstalHyprland from 'gi://AstalHyprland';
+import { compositor } from '../utils/hyprland';
 
 export default function WindowTitle() {
-    const hypr = AstalHyprland.get_default();
-    const activeClient = createBinding(hypr, 'focusedClient');
-
     return (
         <box class='WindowTitle'>
-            <With value={activeClient}>
+            <With value={compositor.focusedClient}>
                 {(client) =>
                     client ? (
                         <label label={createBinding(client, 'title')} />

@@ -1,4 +1,4 @@
-import { Accessor, createBinding, createComputed, For } from 'ags';
+import { Accessor, createComputed, For } from 'ags';
 import { compositor } from '../utils/hyprland';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
@@ -11,6 +11,7 @@ interface WorkspaceButtonData {
     visible: boolean;
     monitorIndex?: number;
     workspace?: AstalHyprland.Workspace;
+    monitorFocused: boolean;
 }
 
 function WorkspaceButtons({
@@ -40,17 +41,15 @@ function WorkspaceButtons({
                                 ) {
                                     classes.push('occupied');
                                 }
-                                if (buttonData.monitorIndex) {
-                                    classes.push(
-                                        `monitor${buttonData.monitorIndex}`
-                                    );
+                                if (!buttonData.monitorFocused) {
+                                    classes.push('monitorInactive');
                                 }
                                 return classes;
                             }
                         )}
-                        onClicked={() =>
-                            compositor.focusWorkspace(buttonData.id)
-                        }
+                        onClicked={() => {
+                            compositor.focusWorkspace(buttonData.id);
+                        }}
                     >
                         {buttonData.id}
                     </button>
@@ -62,8 +61,12 @@ function WorkspaceButtons({
 
 export default function Workspaces() {
     const workspaceButtons = createComputed(
-        [compositor.activeWorkspaces, monitorIndexMap],
-        (activeWorkspaces, monMap) => {
+        [
+            compositor.activeWorkspaces,
+            monitorIndexMap,
+            compositor.focusedMonitor,
+        ],
+        (activeWorkspaces, monMap, focusedMonitor) => {
             const maxId = activeWorkspaces.length
                 ? activeWorkspaces[activeWorkspaces.length - 1].id
                 : 1;
@@ -81,11 +84,20 @@ export default function Workspaces() {
                         monitorIndex: monMap.get(
                             workspace?.monitor.get_name() ?? ''
                         ),
+                        monitorFocused:
+                            workspace?.monitor.get_name() ==
+                            focusedMonitor.get_name(),
                     };
                 }
             );
             return workspaceData;
         }
     );
-    return <WorkspaceButtons buttons={workspaceButtons} />;
+
+    // Cleanup handler on destroy
+    return (
+        <box>
+            <WorkspaceButtons buttons={workspaceButtons} />
+        </box>
+    );
 }

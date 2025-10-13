@@ -7,6 +7,7 @@ export class HyprlandAdapter extends GObject.Object {
     readonly hyprland = AstalHyprland.get_default();
     readonly workspaces = createBinding(this.hyprland, 'workspaces');
     readonly monitors = createBinding(this.hyprland, 'monitors');
+    readonly focusedMonitor = createBinding(this.hyprland, 'focusedMonitor');
     readonly focusedWorkspace = createBinding(
         this.hyprland,
         'focusedWorkspace'
@@ -16,6 +17,7 @@ export class HyprlandAdapter extends GObject.Object {
             .filter((workspace) => !(workspace.id >= -99 && workspace.id <= -2))
             .sort((a, b) => a.id - b.id)
     );
+    readonly focusedClient = createBinding(this.hyprland, 'focusedClient');
 
     constructor() {
         super();

@@ -48,18 +48,14 @@ $radius: 6px;
     .Workspaces {
         button {
             border-radius: 0;
-        }
 
-        button.focused {
-            border-bottom: 2px solid $fg;
-        }
+            &.monitorInactive {
+                color: #555555;
+            }
 
-        button.monitor2 {
-            background-color: rgba(125, 177, 125, 0.5);
-        }
-
-        button.monitor1 {
-            background-color: rgba(188, 50, 70, 0.2);
+            &.focused {
+                border-bottom: 2px solid $fg;
+            }
         }
 
         label {
