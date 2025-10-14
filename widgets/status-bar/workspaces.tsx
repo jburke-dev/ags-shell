@@ -20,7 +20,7 @@ function WorkspaceButtons({
     buttons: Accessor<WorkspaceButtonData[]>;
 }) {
     return (
-        <box class='Workspaces'>
+        <box class='workspaces'>
             <For each={buttons}>
                 {(buttonData) => (
                     <button
@@ -42,7 +42,7 @@ function WorkspaceButtons({
                                     classes.push('occupied');
                                 }
                                 if (!buttonData.monitorFocused) {
-                                    classes.push('monitorInactive');
+                                    classes.push('monitor-inactive');
                                 }
                                 return classes;
                             }

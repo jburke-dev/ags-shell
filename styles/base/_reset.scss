@@ -1,0 +1,8 @@
+@use '../common' as *;
+
+* {
+    all: unset;
+
+    font-family: 'SauceCodePro Nerd Font Propo';
+    color: $fg;
+}

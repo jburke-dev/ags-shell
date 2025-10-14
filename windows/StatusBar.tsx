@@ -16,7 +16,7 @@ export default function StatusBar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
             visible
             name={`statusbar-${gdkmonitor.connector}`}
             gdkmonitor={gdkmonitor}
-            class='StatusBar'
+            class='status-bar'
             exclusivity={Astal.Exclusivity.EXCLUSIVE}
             anchor={TOP | LEFT | RIGHT}
             application={app}

@@ -1,12 +1,12 @@
 import app from 'ags/gtk4/app';
-import styles from './styles.scss';
+import css from './styles/styles.scss';
 import StatusBar from './windows/StatusBar';
 import { createBinding, For } from 'gnim';
 import { Gtk } from 'ags/gtk4';
 import PickerWindow from './windows/Picker';
 
 app.start({
-    css: styles,
+    css,
     instanceName: 'ags-shell',
     requestHandler(argv: string[], res: (response: any) => void) {
         const request = argv[0];
