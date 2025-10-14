@@ -17,6 +17,9 @@ export class HyprlandAdapter extends GObject.Object {
             ) ?? monitors[0]
         );
     });
+    readonly currentMonitorWidth = this.focusedMonitor.as(
+        (monitor) => monitor.width
+    );
     readonly focusedWorkspace = createBinding(
         this.hyprland,
         'focusedWorkspace'

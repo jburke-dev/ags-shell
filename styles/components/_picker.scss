@@ -1,0 +1,20 @@
+@use '../common' as *;
+@use 'sass:color';
+
+box.picker {
+    @include window;
+
+    box.search {
+        margin: 1rem 0.5rem;
+        background-color: color.adjust($fg, $alpha: -0.85);
+    }
+
+    entry {
+        font-size: 1.5rem;
+        margin: $spacing-xs;
+    }
+}
+
+button.invisible {
+    background-color: transparent;
+}

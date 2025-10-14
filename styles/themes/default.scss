@@ -1,7 +1,7 @@
 $grey0: rgba(33, 34, 35, 0.8);
 $grey1: rgba(66, 68, 70, 0.8);
-$white: #eeeeec;
+$white: rgba(238, 238, 204, 1);
 
-$fg: #{$white};
+$fg: $white;
 $bg: #{$grey0};
 $bg_muted: #{$grey1};

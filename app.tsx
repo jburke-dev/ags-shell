@@ -13,6 +13,7 @@ app.start({
         switch (request) {
             case 'picker':
                 app.toggle_window('picker');
+                res('picker toggled');
                 break;
             default:
                 res('not found');

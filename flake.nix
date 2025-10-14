@@ -36,6 +36,7 @@
             astal4
             hyprland
             mpris
+            apps
           ];
           extraPackages =
             astalPackages
