@@ -1,6 +1,7 @@
 import { register } from 'gnim/gobject';
 import { BaseProvider } from '../provider';
 import Apps from 'gi://AstalApps';
+import { AppItem } from '../types';
 
 @register({ GTypeName: 'AppProvider' })
 export class AppProvider extends BaseProvider {
@@ -18,6 +19,7 @@ export class AppProvider extends BaseProvider {
             const trimmedQuery = query.trim();
 
             if (trimmedQuery.length === 0) {
+                this.setDefaultResults(this.apps.get_list());
             } else {
                 const fuzzyResults = this.apps
                     .fuzzy_query(trimmedQuery)
@@ -27,5 +29,9 @@ export class AppProvider extends BaseProvider {
         } finally {
             this.setLoading(false);
         }
+    }
+
+    activate(item: AppItem): void {
+        item.launch();
     }
 }

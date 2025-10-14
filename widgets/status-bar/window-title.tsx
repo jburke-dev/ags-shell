@@ -7,7 +7,11 @@ export default function WindowTitle() {
             <With value={compositor.focusedClient}>
                 {(client) =>
                     client ? (
-                        <label label={createBinding(client, 'title')} />
+                        <label
+                            label={createBinding(client, 'title').as(
+                                (title) => title ?? ''
+                            )}
+                        />
                     ) : (
                         <label label='' />
                     )

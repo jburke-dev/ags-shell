@@ -1,6 +1,13 @@
 @use '../variables' as *;
+@use 'base' as *;
 
 @mixin window {
     background: $bg;
+    padding: $spacing-sm;
+}
+
+@mixin window-box {
+    @include rounding;
+    margin: $spacing-sm;
     padding: $spacing-sm;
 }

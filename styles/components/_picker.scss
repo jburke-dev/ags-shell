@@ -13,6 +13,34 @@ box.picker {
         font-size: 1.5rem;
         margin: $spacing-xs;
     }
+
+    box.results-list {
+        @include window-box;
+
+        .app-button {
+            label.name {
+                font-weight: bold;
+            }
+
+            label.description {
+                color: color.adjust($fg, $alpha: -0.2);
+            }
+
+            image {
+                -gtk-icon-size: 3rem;
+                margin-right: 0.3rem;
+                margin-left: 0.3rem;
+            }
+
+            &:focus,
+            &:hover,
+            &.selected {
+                @include button-active;
+                background-color: $buttonEnabledHover;
+                border: transparent;
+            }
+        }
+    }
 }
 
 button.invisible {

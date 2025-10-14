@@ -34,6 +34,7 @@ function PickerLayout({
             <button
                 widthRequest={compositor.currentMonitorWidth((w) => w / 2)}
                 onClicked={onClickOutside}
+                class='invisible'
             />
         </box>
     );
@@ -55,6 +56,8 @@ export default function PickerWindow() {
             onNotifyVisible={({ visible }) => {
                 if (visible) {
                     picker.focusSearch();
+                } else {
+                    picker.clearSearch();
                 }
             }}
         >

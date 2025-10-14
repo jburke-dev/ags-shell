@@ -1,0 +1,30 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use 'base' as *;
+
+@mixin button-common {
+    border-radius: calc(#{$round} * 1.97);
+    padding: 0.4rem;
+}
+
+@mixin button {
+    @include animate;
+    @include button-common;
+    background: $buttonDisabled;
+    border: 1px solid color.adjust($fg, $alpha: -0.9);
+
+    &:hover {
+        background: $buttonDisabledHover;
+    }
+}
+
+@mixin button-active {
+    @include animate;
+    @include button-common;
+    background: $buttonEnabled;
+    border: 1px solid color.adjust($buttonEnabled, $alpha: 0.1);
+
+    &:hover {
+        background: $buttonEnabledHover;
+    }
+}
